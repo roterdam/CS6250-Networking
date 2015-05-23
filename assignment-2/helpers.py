@@ -25,7 +25,7 @@ def write_forwarding_entry(switchnum, switchport, macaddr):
         raise TypeError("macaddr is not in proper form: 00:00:00:00:00:00")
 
     logfile.write(str(switchnum) + " " + str(switchport) + " " + macaddr.lower() + "\n")
-    print str(switchnum) + " " + str(switchport) + " " + macaddr.lower())
+    print str(switchnum) + " " + str(switchport) + " " + macaddr.lower()
 
 def next_entry():
     logfile.write("\n")

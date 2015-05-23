@@ -79,7 +79,7 @@ class LearningSwitch(DynamicPolicy):
         rule1 = 1, "00:00:00:00:00:01", 3
         rule2 = 1, "00:00:00:00:00:02", 2
         for rule in (rule1, rule2):
-            if new_policy = None:
+            if new_policy == None:
                 # First entry, prime the pump
                 new_policy = (match(switch=int(rule[0]), dstmac=(rule[1])) >>
                               fwd(rule[2]))
@@ -89,7 +89,7 @@ class LearningSwitch(DynamicPolicy):
             if not_flood_pkts == None:
                 not_flood_pkts = (match(switch=int(rule[0]), dstmac=(rule[1])))
             else:
-                not_flood_pkts |= (match(switch=int(rule[0]), dstmac=(rule[1]))
+                not_flood_pkts |= (match(switch=int(rule[0]), dstmac=(rule[1])))
                         
                 
 
