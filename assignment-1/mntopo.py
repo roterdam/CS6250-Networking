@@ -19,10 +19,15 @@ class MNTopo(Topo):
 
         # Hosts and switches
         s1 = self.addSwitch('s1')
-	s2 = self.addSwitch('s2')
-	s3 = self.addSwitch('s3')
+        s2 = self.addSwitch('s2')
+        s3 = self.addSwitch('s3')
+
         sender = self.addHost('sender', **hostConfig)
         receiver = self.addHost('receiver', **hostConfig)
+
+	# Wire switches
+	self.addLink(s1, s2, **linkConfig)
+	self.addLink(s2, s3, **linkConfig)
 
         # Wire receiver
         self.addLink(receiver, s3, **linkConfig)
