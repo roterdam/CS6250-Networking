@@ -10,7 +10,7 @@ from pyretic.lib.query import packets
 from helpers import *
 
 
-class StaticSwitch(Policy):
+class StaticSwitch(Object):
     def __init__(self):
         """ 
         Initialization of static switch. Set up your forwarding tables  here.
@@ -26,10 +26,6 @@ class StaticSwitch(Policy):
 
         # TODO: set up forwarding tables. Create this however you wish. As
         # a suggestion, using a list of tuples will work.
-        
-
-
-        return self.build_policy()
         
 
     def build_policy(self):
@@ -54,4 +50,4 @@ class StaticSwitch(Policy):
         
         
 def main():
-    return StaticSwitch()
+    return StaticSwitch().build_policy()
