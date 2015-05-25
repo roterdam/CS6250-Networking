@@ -36,7 +36,7 @@ class LearningSwitch(DynamicPolicy):
         self.query = new_pkts
 
         # Initialize the policy
-        self.push_rules() 
+        self.build_policy() 
 
 
     def print_switch_tables(self):
@@ -56,8 +56,8 @@ class LearningSwitch(DynamicPolicy):
         # print out the switch tables:
         self.print_switch_tables()
 
-        # Call push_rules to update the fowarding tables of the switches.
-        self.push_rules()
+        # Call build_policy to update the fowarding tables of the switches.
+        self.build_policy()
         pass
 
 

@@ -10,7 +10,7 @@ from pyretic.lib.query import packets
 from helpers import *
 
 
-class StaticSwitch(Object):
+class StaticSwitch(Policy):
     def __init__(self):
         """ 
         Initialization of static switch. Set up your forwarding tables  here.
