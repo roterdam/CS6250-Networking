@@ -47,18 +47,18 @@ class LSTopo(Topo):
 
         # Add links between switches
         self.addLink(sA, sB, port1=1, port2=1, **lconfig)
-        self.addLink(sB, sC, port1=3, port2=1, **lconfig)
-        self.addLink(sC, sD, port1=2, port2=2, **lconfig)
-        self.addLink(sB, sE, port1=2, port2=2, **lconfig)
+        self.addLink(sB, sC, port1=2, port2=1, **lconfig)
+        self.addLink(sC, sD, port1=2, port2=1, **lconfig)
+        self.addLink(sB, sE, port1=3, port2=1, **lconfig)
 
         # Add links between hosts and switches
-        self.addLink(sA, h1, port1=0, port2=0, **lconfig)
-        self.addLink(sB, h2, port1=0, port2=0, **lconfig)
-        self.addLink(sC, h3, port1=0, port2=0, **lconfig)
-        self.addLink(sD, h4, port1=0, port2=0, **lconfig)
-        self.addLink(sD, h5, port1=1, port2=0, **lconfig)
-        self.addLink(sE, h6, port1=1, port2=0, **lconfig)
-        self.addLink(sE, h7, port1=0, port2=0, **lconfig)
+        self.addLink(sA, h1, port1=2, port2=0, **lconfig)
+        self.addLink(sB, h2, port1=4, port2=0, **lconfig)
+        self.addLink(sC, h3, port1=3, port2=0, **lconfig)
+        self.addLink(sD, h4, port1=2, port2=0, **lconfig)
+        self.addLink(sD, h5, port1=3, port2=0, **lconfig)
+        self.addLink(sE, h6, port1=2, port2=0, **lconfig)
+        self.addLink(sE, h7, port1=3, port2=0, **lconfig)
 
 def main():
     print "Starting topology"
