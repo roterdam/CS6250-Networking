@@ -41,6 +41,12 @@ class StaticSwitch(Object):
         
         subpolicies.append(match(switch=1, dstmac="00:00:00:00:00:01") >> fwd(3))
         subpolicies.append(match(switch=1, dstmac="00:00:00:00:00:02") >> fwd(2))
+        # NOTE: this will flood for MAC broadcasts (to ff:ff:ff:ff:ff:ff).
+        # You will need to include something like this in order for ARPs to 
+        # propogate. xfwd() is like fwd(), but will not forward out a port a 
+        # packet came in on. Useful in this case.
+        subpolicies.append(match(switch=1, dstmac="ff:ff:ff:ff:ff:ff") >> parallel([xfwd(1), xfwd(2), xfwd(3)]))
+        subpolicies.append(match(switch=2, dstmac="ff:ff:ff:ff:ff:ff") >> parallel([xfwd(1), xfwd(2), xfwd(3)]))
 
         # This returns a parallel composition of all the subpolicies you put
         # together above.
