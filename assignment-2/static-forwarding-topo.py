@@ -39,14 +39,16 @@ class LSTopo(Topo):
         h3 = self.addHost('h3', **hconfig)
         h4 = self.addHost('h4', **hconfig)
 
-        # Add links between switches
-        self.addLink(sA, sB, port1=0, port2=0, **lconfig)
-
         # Add links between hosts and switches
         self.addLink(sA, h1, port1=1, port2=0, **lconfig)
         self.addLink(sA, h2, port1=2, port2=0, **lconfig)
         self.addLink(sB, h3, port1=1, port2=0, **lconfig)
         self.addLink(sB, h4, port1=2, port2=0, **lconfig)
+
+        # Add links between switches
+        self.addLink(sA, sB, port1=3, port2=3, **lconfig)
+
+
 
 def main():
     print "Starting topology"
