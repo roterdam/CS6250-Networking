@@ -6,6 +6,7 @@
 #
 # Copyright 2015 Sean Donovan
 
+from helpers import *
 
 class Node(object):
     
@@ -59,10 +60,20 @@ class Node(object):
         self.messages.append(msg)
 
     def process_BF(self):
-        pass
         # TODO: The Bellman-Ford algorithm needs to be implemented here.
         # 1. Process queued messages
         # 2. Send neighbors updated distances
+
+        # Process queue:
+        for msg in self.messages:
+            # TODO: Do something
+            pass
+        # Empty queue
+        self.messages = []
+
+        # Send neighbors udpated distances:
+        pass
+            
 
     def log_distances(self):
         ''' Prints distances in the following format (no whitespace either end):
@@ -71,9 +82,12 @@ class Node(object):
         B is the neighbor, 1 is it's distance
         Taken from topo1.py
         '''
+        # TODO: The string in the format above (no newlines, no whitepsace) must
+        # be defined. THen log with write_entry, example below.
+        logstring = "A:B1,C2"
+        write_entry(logstring)
         pass
-        # TODO: This needs to be implemented based on your local distances 
-        # structure. You may wish to log to a file here.
+
 
 
 class Topology(object):
@@ -129,9 +143,8 @@ class Topology(object):
                 node.log_distances()
             
 
-            print "-------"
-            # TODO? if looging to a file, you need to also log the ------ 
-            # to separate the different loop instances. 
+            # Log a break.
+            next_entry()
 
             done = True
             for node in self.nodes:
