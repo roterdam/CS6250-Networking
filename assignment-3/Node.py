@@ -7,7 +7,7 @@
 # Copyright 2015 Sean Donovan
 
 
-class Node(Object):
+class Node(object):
     
     # name is the name of the local node
     # links is a list of all neighbors's names. 
@@ -32,11 +32,26 @@ class Node(Object):
         ''' Returns the length of the message queue. '''
         return len(self.messages)
 
+    def __str__(self):
+        ''' Returns a string representation of the node. '''
+        #TODO? You may want to edit this with your distance info.
+
+        retstr = self.name + " : links ( "
+        for neighbor in self.links:
+            retstr = retstr + neighbor + " "
+        return retstr + ")"
+        
+
+    def __repr__(self):
+        return self.__str__()
+
+        
+
     def verify_neighbors(self):
         ''' Verify that all your neighbors has a backlink to you. '''
         for neighbor in self.links:
             if self.name not in self.topology.topodict[neighbor].links:
-                raise Exception(neighbor + " does not have link to " self.name)
+                raise Exception(neighbor + " does not have link to " + self.name)
 
     def queue_msg(self, msg):
         ''' Allows neighbors running Bellman-Ford to send you a message, to be
@@ -61,7 +76,7 @@ class Node(Object):
         # structure. You may wish to log to a file here.
 
 
-class Topology(Object):
+class Topology(object):
 
     topodict = {}
     nodes = []
@@ -75,10 +90,11 @@ class Topology(Object):
             file passed into __init__(). Can throw an exception if there is a
             problem with the config file. '''
         try:
-            from conf_file import topo
-            for key in topo.keys():
-                new_node = Node(key, self, topo[key])
-                nodes.append(new_node)
+            conf = __import__(conf_file)
+            for key in conf.topo.keys():
+                new_node = Node(key, self, conf.topo[key])
+                self.nodes.append(new_node)
+                self.topodict[key] = new_node
                 
         except:
             print "error importing conf_file" + conf_file
@@ -89,6 +105,8 @@ class Topology(Object):
     def verify_topo(self):
         ''' Once the topology is imported, we verify the topology to make sure
             it is actually valid. '''
+        print self.topodict
+
         for node in self.nodes:
             try:
                 node.verify_neighbors()
