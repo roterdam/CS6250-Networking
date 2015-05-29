@@ -1,0 +1,126 @@
+# Assignment 3 for OMS6250
+#
+# This defines a Node that can fun the Bellman-Ford algorithm. The TODOs are
+# all related to implementing BF. Also defines a Topology, which is a collection
+# of Nodes.
+#
+# Copyright 2015 Sean Donovan
+
+
+class Node(Object):
+    
+    # name is the name of the local node
+    # links is a list of all neighbors's names. 
+    # topology is a backlink to the Topology class. Used for accessing neighbors
+    #   as follows: self.topology.topodict['A']
+    # messages is a list of pending messages from neighbors to be processed.
+    #   The format of the message is up to you; a tuple will work.
+    name = None
+    links = []
+    topology = None
+    messages = []
+
+    #TODO: You need to have a structure that contains current distances
+
+    def __init__(self, name, topolink, neighbors):
+        self.name = name
+        self.topology = topolink
+        self.links = neighbors
+        #TODO? You may need to initialize your distance data structure
+
+    def __len__(self):
+        ''' Returns the length of the message queue. '''
+        return len(self.messages)
+
+    def verify_neighbors(self):
+        ''' Verify that all your neighbors has a backlink to you. '''
+        for neighbor in self.links:
+            if self.name not in self.topology.topodict[neighbor].links:
+                raise Exception(neighbor + " does not have link to " self.name)
+
+    def queue_msg(self, msg):
+        ''' Allows neighbors running Bellman-Ford to send you a message, to be
+            processed next time through self.process_BF(). '''
+        self.messages.append(msg)
+
+    def process_BF(self):
+        pass
+        # TODO: The Bellman-Ford algorithm needs to be implemented here.
+        # 1. Process queued messages
+        # 2. Send neighbors updated distances
+
+    def log_distances(self):
+        ''' Prints distances in the following format (no whitespace either end):
+        A:B1,C2
+        A is the node were on,
+        B is the neighbor, 1 is it's distance
+        Taken from topo1.py
+        '''
+        pass
+        # TODO: This needs to be implemented based on your local distances 
+        # structure. You may wish to log to a file here.
+
+
+class Topology(Object):
+
+    topodict = {}
+    nodes = []
+
+    def __init__(self, conf_file):
+        ''' Initializes the topology. Called from outside of Node.py '''
+        self.topo_from_conf_file(conf_file)
+    
+    def topo_from_conf_file(self, conf_file):
+        ''' This created all the nodes in the Topology  from the configuration
+            file passed into __init__(). Can throw an exception if there is a
+            problem with the config file. '''
+        try:
+            from conf_file import topo
+            for key in topo.keys():
+                new_node = Node(key, self, topo[key])
+                nodes.append(new_node)
+                
+        except:
+            print "error importing conf_file" + conf_file
+            raise
+
+        self.verify_topo()
+
+    def verify_topo(self):
+        ''' Once the topology is imported, we verify the topology to make sure
+            it is actually valid. '''
+        for node in self.nodes:
+            try:
+                node.verify_neighbors()
+            except:
+                print "error with neighbors of " + node.name
+                raise
+
+    def run_topo(self):
+        ''' This is where most of the action happens. In a loop, we go thorugh
+            all of the nodes in the topology running their instances of 
+            Bellman-Ford, passing and receiving messages, until there are no
+            further messages to service. Each loop, print out the distances 
+            after the loop instance. After the full loop, check to see if we're
+            finished (all queues are empty).
+        '''
+        done = False
+        while done == False:
+            for node in self.nodes:
+                node.process_BF()
+                node.log_distances()
+            
+
+            print "-------"
+            # TODO? if looging to a file, you need to also log the ------ 
+            # to separate the different loop instances. 
+
+            done = True
+            for node in self.nodes:
+                if len(node) != 0:
+                    done = False
+                    break
+
+
+    
+
