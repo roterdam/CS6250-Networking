@@ -40,7 +40,9 @@ class StaticSwitch(Policy):
         open_log("static-forwarding.log")
         for policy in self.fwd_table:
             write_forwarding_entry(policy[0], policy[2], policy[1])
+        print("I am here")
         finish_log()
+        print("I am also here")
 
     def build_policy(self):
         """
